@@ -1,0 +1,71 @@
+import pyttsx3
+import speech_recognition
+import datetime
+import webbrowser
+engine=pyttsx3.init('sapi5')
+voices=engine.getProperty('voices')
+rate=engine.getProperty('rate')
+engine.setProperty('rate',110)
+engine.setProperty('voice','voices[0].id')
+def speek(text):
+    engine.say(text)
+    engine.runAndWait()
+
+r=speech_recognition.Recognizer()
+def takeCommand():
+    with speech_recognition.Microphone() as source:
+        r.energy_threshold=10000
+        r.adjust_for_ambient_noise(source,1.2)
+        print("listing")
+        audio=r.listen(source)
+        try:
+            text=r.recognize_google(audio)
+            print(text)
+        except Exception as e:
+            speek("say that again chinni")
+            return "none"
+        return text
+if __name__ == "__main__":
+    speek("Hi Chinni..! How's the day?")
+    while True:
+        text = takeCommand().lower()
+        if text == 0:
+            continue
+        elif "hello" in text:
+            speek("ha chinni")
+        elif "what" and "about" in text:
+            speek("I'm having Very Good days Chinni,.. because of you,..")
+            speek("Whats going on chinni?")
+        elif 'what is the time' in text:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speek(f"Chinni, the time is {strTime}")
+        elif "who made you" in text or "created you" in text or "discovered you" in text:
+            speek("I was built by my Chinni")
+            print("I was built by my Chinni")
+
+        elif "good bye" in text or "ok bye" in text or "stop" in text:
+            speek('Ok then bye chinni , want to talk with you soon again ')
+            print('Ok then chinni , want to talk with you soon again ummmmahhh')
+            break
+        elif 'open youtube' in text:
+            webbrowser.open_new_tab("https://www.youtube.com")
+            speek("youtube is open now")
+            break
+            time.sleep(5)
+        elif 'open chegg'in text:
+            webbrowser.open_new_tab("https://expert.chegg.com")
+            speek("chegg is open now")
+            break
+            time.sleep(5)
+        elif 'open google' in text:
+            webbrowser.open_new_tab("https://www.google.com")
+            speek("Google chrome is open now")
+            break
+            time.sleep(5)
+        elif "open whatsapp" in text:
+            webbrowser.open_new_tab("https://web.whatsapp.com/")
+            speek("Whatspp is open now")
+            break
+            time.sleep(5)
+        else:
+            speek("chinni speek something")
